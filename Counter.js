@@ -14,7 +14,7 @@ export default function Counter() {
   const [subscription, setSubscription] = useState(null);
   const recentAccelerationData = useRef([]);//useRef returns a mutable ref object whose .current property is initialized to the passed argument (initialValue). The returned object will persist for the full lifetime of the component.
   const steps = useRef([]);//useRef returns a mutable ref object whose .current property is initialized to the passed argument (initialValue). The returned object will persist for the full lifetime of the component.
-  const [stepCount, setStepCount] = useState(0);
+  const [stepCount, setStepCount] = useState(0); //State variable
   const previousHighPointTimeRef = useRef(0);//this is the most recent time we had a spike in acceleration, we initialize it to 0 meaning none
   const previousValue = useRef(0);//we process every 20 measurements, and this will be the 20th measurement from the previous time we processed data, start it at 0
 
@@ -93,14 +93,14 @@ export default function Counter() {
        steps: {stepCount}
       </Text>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity
+        <TouchableOpacity //The stop and start button on the counter
           onPress={subscription ? _unsubscribe : _subscribe}
           style={styles.button}
         >
           <Text>{subscription ? 'Stop' : 'Start'}</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity
+        <TouchableOpacity 
           onPress={_slow}
           style={[styles.button, styles.middleButton]}
         >
