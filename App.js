@@ -62,7 +62,7 @@ export default function App() {
 
 }
  else {
-  return (<Login/>);
+  return (<Login setUserLoggedIn={setUserLoggedIn} />);
 }
 }
 
