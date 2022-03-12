@@ -4,7 +4,7 @@ import { Accelerometer } from 'expo-sensors';
 import { useLinkProps } from '@react-navigation/native';
 
 // const setUserLoggedIn = (props) => {
-const setUserLoggedIn = () => {
+const LoggedIn = (props) => {
   const [phone, onChangePhoneNumber] = React.useState(null);
   const [number, onChangeOTP] = React.useState(null);
 
@@ -44,12 +44,13 @@ const setUserLoggedIn = () => {
             oneTimePassword: number
           })
         })
-      // .then((response) => console.log(response.text()));
-      .then((response) => {
-        //console.log(response.text());
-        // console.log(result);
+      //.then((response) => console.log(response.status()));
+      .then((response) => {return response.status})
+      .then((status) => {
 
-        if(response.status == 200){
+        console.log(status)
+
+        if(status == 200){
           {props.setUserLoggedIn(true)}
         } 
         else {
@@ -85,7 +86,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default setUserLoggedIn;
+export default LoggedIn;
 
 // export default function SettingsScreen() {
 //   const styles = StyleSheet.create({
