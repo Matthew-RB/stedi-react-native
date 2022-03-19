@@ -33,44 +33,42 @@ const LoggedIn = (props) => {
       />
       <View>
       <Button
-      title="Log In"
-      // onPress={() => {props.setUserLoggedIn(true)} } 
-
-      onPress={() => {
-        fetch('https://dev.stedi.me/twofactorlogin' ,{
-          method: 'post',
+      title="Login"
+      style={styles.btn}
+      //onPress={() => {props.setUserLoggedIn(true)}}
+       onPress={() => {
+          fetch('https://dev.stedi.me/twofactorlogin' ,{method: 'POST',
           body: JSON.stringify({
             phoneNumber: phone,
             oneTimePassword: number
+          })})
+
+          .then((response) => { //{return response.status})
+           const statuscode = response.status
+           const data = response.text()
+           return Promise.all([statuscode, data])
           })
-        })
-      //.then((response) => console.log(response.status()));
-      .then((response) => {return response.status})
-      .then((status) => {
-
-        console.log(status)
-
-        if(status == 200){
-          {props.setUserLoggedIn(true)}
-        } 
-        else {
-          alert('Please check your login information.');
+          .then(([response, data])  =>{
+              if(response == 200){
+                props.setUserLoggedIn(true)
+                console.log(data)
+                //.then((response) => { result}
+                fetch('https://dev.stedi.me/validate/'+data)
+                .then((emailResponse)=> {
+                  const useradress = emailResponse.text()
+                  return useradress
+                })
+                .then((email)=>{
+                  console.log(email)
+                  props.setuserEmail(email)
+                })
+              }
+              else{
+                alert('Please check your login information.');
+              }
+            });
+          }
         }
-      });
-      
-      // .then((result) => {
-      //   //console.log(response.text());
-      //   console.log(result);
-
-      //   if(result.status() == 200){
-      //     {props.setUserLoggedIn(true)}
-      //   } 
-      //   else {
-      //     alert('Please check your login information.');
-      //   }
-      // });
-      }
-    } 
   />  
       </View>
     </SafeAreaView>
