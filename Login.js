@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { SafeAreaView, StyleSheet, TextInput, Button, Alert, Text, TouchableOpacity, View } from 'react-native';
+import { SafeAreaView, StyleSheet, TextInput, Alert, Text, TouchableOpacity, View } from 'react-native';
+import {Button} from 'react-native-elements'
 import { Accelerometer } from 'expo-sensors';
 import { useLinkProps } from '@react-navigation/native';
 
@@ -9,7 +10,9 @@ const LoggedIn = (props) => {
   const [number, onChangeOTP] = React.useState(null);
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.page}>
+      <Text 
+      style={styles.text}>Login</Text>
       <TextInput
         style={styles.input}
         onChangeText={onChangePhoneNumber}
@@ -17,8 +20,9 @@ const LoggedIn = (props) => {
         placeholder="phone number"
         keyboardType="numeric"
       />
-      <View>
-      <Button
+
+      <View style={styles.container}>
+      <Button style={styles.btn}
       title="send otp"
       onPress={() => fetch('https://dev.stedi.me/twofactorlogin/'+phone, {method: 'post'})}
      />
@@ -31,11 +35,10 @@ const LoggedIn = (props) => {
         keyboardType="numeric"
 
       />
-      <View>
-      <Button
+      <View style={styles.container}>
+      <Button style={styles.btn}
       title="Login"
-      style={styles.btn}
-      //onPress={() => {props.setUserLoggedIn(true)}}
+      //onPress={() => {props.setUserLoggedIn(true)}} 
        onPress={() => {
           fetch('https://dev.stedi.me/twofactorlogin' ,{method: 'POST',
           body: JSON.stringify({
@@ -76,33 +79,38 @@ const LoggedIn = (props) => {
 };
 
 const styles = StyleSheet.create({
+  page: {
+    flex: 1,
+    justifyContent: 'flex-start',
+    paddingHorizontal: 10,
+  },
   input: {
-    height: 40,
-    margin: 12,
+    alignItems: 'center',
+    height: 45,
+    margin: 20,
     borderWidth: 1,
     padding: 10,
   },
+  container: {
+    justifyContent: 'center',
+    textAlign: 'center',
+    alignItems: 'center',
+  },
+  btn: {
+    //flexDirection: "row",
+    alignItems: 'center',
+    width: 90,
+    height: 40,
+    },
+  text: {
+    alignItems: 'center',
+    paddingTop: 150,
+    color: 'black',
+    fontWeight: '600',
+    fontSize: 30,
+    textAlign: 'center'
+    },
+
 });
 
 export default LoggedIn;
-
-// export default function SettingsScreen() {
-//   const styles = StyleSheet.create({
-//     container: {
-//       flex: 1,
-//       justifyContent: 'center',
-//       paddingHorizontal: 10,
-//     },
-//     message: {
-//       textAlign: 'center',
-
-//     }
-  
-//   })
-//   return(
-//     <View style={styles.container}>
-//       <Text style={styles.message}>This is the settings page</Text>
-//     </View>
-//   )
-
-// }
